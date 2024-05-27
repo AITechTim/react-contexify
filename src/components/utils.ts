@@ -27,10 +27,8 @@ export function cloneItems(
     }
     console.log(item.type)
     if(item.type === Item || !item.props.children) {
-      console.log("Is Item or no children");
       items.push(cloneElement(item as ReactElement<any>, props)); 
     } else {
-      console.log("Has children");
       let grandchildren = cloneItems(item.props.children, props);
       let newItem = cloneElement(item as ReactElement<any>, {children: grandchildren});
       items.push(newItem); 
