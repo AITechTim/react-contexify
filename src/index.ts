@@ -5,4 +5,5 @@ export * from './components/Submenu';
 export * from './components/RightSlot';
 export * from './core/contextMenu';
 export * from './hooks/useContextMenu';
+export * from './components/utils';
 export * from './types';

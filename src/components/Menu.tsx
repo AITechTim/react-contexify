@@ -1,4 +1,5 @@
 import React, {
+  ReactElement,
   ReactNode,
   useEffect,
   useReducer,
@@ -64,6 +65,8 @@ export interface MenuProps
    * Used to track menu visibility
    */
   onVisibilityChange?: (isVisible: boolean) => void;
+
+  renderChildren?: (children: ReactNode, props: any) => ReactNode;
 }
 
 interface MenuState {
@@ -82,6 +85,14 @@ function reducer(
   return { ...state, ...(isFn(payload) ? payload(state) : payload) };
 }
 
+{/* <div className={cx(CssClass.menuWrapper)}>
+{cloneItems(children, {
+  propsFromTrigger,
+  triggerEvent,
+})}
+</div>
+{children} */}
+
 export const Menu: React.FC<MenuProps> = ({
   id,
   theme,
@@ -91,6 +102,7 @@ export const Menu: React.FC<MenuProps> = ({
   animation = 'fade',
   preventDefaultOnKeydown = true,
   disableBoundariesCheck = false,
+  renderChildren = cloneItems,
   onVisibilityChange,
   ...rest
 }) => {
@@ -293,12 +305,7 @@ export const Menu: React.FC<MenuProps> = ({
           ref={nodeRef}
           role="menu"
         >
-          <div className={cx(CssClass.menuWrapper)}>
-						{cloneItems(children, {
-							propsFromTrigger,
-							triggerEvent,
-						})}
-					</div>
+          {renderChildren(children, { propsFromTrigger, triggerEvent })}
         </div>
       )}
     </ItemTrackerProvider>
